@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+
+<head>
+	<title>AngularJS Todo List</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="todoController">
+	<h1>Todo List</h1>
+	
+	<!-- Form for adding a new task -->
+	<form ng-submit="addTask()"> 
+		Task:
+		<input type="text" ng-model="newTask" required>
+		<button type="submit">Add Task</button>
+	</form>
+	<br>
+	<!-- Table to display task information -->
+	<table>
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="task in tasks">
+				<td>{{ task }}</td>
+				<td>
+					<button ng-click="editTask($index)">Edit</button>
+					<button ng-click="deleteTask($index)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- Edit Task Modal -->
+	<div ng-if="editingTaskIndex !== null">
+		<h2>Edit Task</h2> 
+		Task:
+		<input type="text" ng-model="tasks" required>
+		<br>
+		<button ng-click="saveEdit()">Save</button>
+		<button ng-click="cancelEdit()">Cancel</button>
+	</div>
+	
+	<script>
+		var app = angular.module('todoApp', []);
+		
+		app.controller('todoController', function ($scope) {
+			$scope.tasks = [
+			'Task 1',
+			'Task 2',
+			'Task 3'
+			];
+			$scope.newTask = '';
+			$scope.editingTaskIndex = null;
+			
+			$scope.addTask = function () {
+				$scope.tasks.push($scope.newTask);
+				$scope.newTask = '';
+			};
+			$scope.editTask = function (index) {
+
+			var updatedTask = prompt('Enter updated task:');
+
+			if (updatedTask !== null) {
+
+				$scope.tasks.splice(index, 1, updatedTask);
+			}
+		};
+			$scope.deleteTask = function (index) {
+				$scope.tasks.splice(index, 1);
+			};
+		});
+	</script>
+</body>
+</html>

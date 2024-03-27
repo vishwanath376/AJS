@@ -1,0 +1,33 @@
+<html ng-app="mathApp">
+<head>
+<title>AngularJS Math Operations</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="mathController">
+<h2>Math Operations</h2> Enter a Number:
+<input type="number" ng-model="inputNumber" />
+<button ng-click="calculateFactorial()">Calculate Factorial</button>
+<button ng-click="calculateSquare()">Calculate Square</button>
+<p ng-show="factorialResult !== undefined">Factorial: {{ factorialResult }}</p>
+<p ng-show="squareResult !== undefined">Square: {{ squareResult }}</p>
+<script>
+var app = angular.module('mathApp', []); app.controller('mathController', function ($scope) {
+$scope.calculateFactorial = function () { if ($scope.inputNumber >= 0) {
+$scope.factorialResult = factorial($scope.inputNumber);
+} else {
+$scope.factorialResult = 'Cannot calculate factorial for negative numbers';
+}
+};
+$scope.calculateSquare = function () {
+$scope.squareResult = $scope.inputNumber * $scope.inputNumber;
+};
+function factorial(n) { if (n == 0 || n == 1) {
+return 1;
+} else {
+return n * factorial(n - 1);
+}
+}
+});
+</script>
+</body>
+</html>
